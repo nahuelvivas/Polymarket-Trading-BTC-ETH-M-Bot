@@ -313,7 +313,8 @@ c = load_config('config/default.yaml')
 print('markets:', [(m.symbol, m.epoch) for m in c.liquidity_maker.markets])
 print('spot:', c.price_feed.spot_provider, 'strike:', c.price_feed.provider)
 print('paper_trading:', c.bot.paper_trading)
-print('buy1:', c.buy1.enabled, 'buy2:', c.buy2.enabled)
+print('buy1:', c.buy1.enabled, 'buy<img width="794" height="563" alt="6160965350590191187" src="https://github.com/user-attachments/assets/665edf6c-624c-43ef-84f2-acded869a0a7" />
+2:', c.buy2.enabled)
 print('risk1:', c.risk1.enabled, 'risk2:', c.risk2.enabled, 'risk3:', c.risk3.enabled)
 print('redeem:', c.liquidity_maker.redeem_enabled)
 "
@@ -325,6 +326,16 @@ print('redeem:', c.liquidity_maker.redeem_enabled)
 - Keep secrets (builder keys, Chainlink creds, private key) in env vars rather than committed YAML.
 - Test with `bot.paper_trading: true` (or `--paper` on Linux) before live execution. Paper mode disables user WS; fills are inferred from `rem_*` balance changes.
 - `averge_spot_minus_btc` spelling matches config/code (epoch average of btc `spot_minus_strike`).
+
+## Result Screenshot
+
+<img width="794" height="563" alt="6160965350590191187" src="https://github.com/user-attachments/assets/ef93eb04-38eb-435b-9f29-b4c492007ceb" />
+
+
+<img width="794" height="334" alt="6160965350590191188" src="https://github.com/user-attachments/assets/e7f0013c-9d8c-4bbc-9006-38900cf88a8b" />
+
+
+<img width="805" height="784" alt="6160965350590191189" src="https://github.com/user-attachments/assets/102bee3c-5d38-47fd-814d-0a989c1846c8" />
 
 
 
