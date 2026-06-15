@@ -1,0 +1,184 @@
+# Polymarket monitor → redeem
+# Override with POLYBOT5MBES_ env vars
+
+bot:
+  dry_run: false
+  # Paper vs live: true = simulated fills (no real CLOB orders); false = live trading.
+  paper_trading: true
+  # Paper V2: starting bankroll per market; fee_bps on each fill’s notional (0 = off).
+  paper_starting_usdc: 3000
+  paper_fee_bps: 0
+  paper_settlement_delay_min_s: 0.5
+  paper_settlement_delay_max_s: 2.0
+  paper_partial_fill_fraction_min: 0.5
+  paper_partial_fill_fraction_max: 1.0
+  # SELL limit fills settle after N monitor poll ticks (not wall-clock delay).
+  paper_sell_limit_settle_ticks: 2
+  # Optional tighter range for FAK buys (defaults to paper_partial_fill_*).
+  # paper_fak_partial_fill_fraction_min: 0.4
+  # paper_fak_partial_fill_fraction_max: 0.95
+  log_level: INFO
+  log_file: "logs/polybot5m.log"
+  log_append: false
+  log_timestamp_name: true
+
+# UTC trading schedule (Mon–Sat by default; Sunday always sleeps when enabled).
+schedule:
+  enabled: false
+  weekdays: [monday, tuesday, wednesday, thursday, friday, saturday]
+  windows:
+    - start_hour: 4
+      start_minute: 0
+      end_hour: 11
+      end_minute: 01
+    - start_hour: 18
+      start_minute: 0
+      end_hour: 22
+      end_minute: 01
+  sleep_log_interval_min: 1
+
+api:
+  gamma_url: "https://gamma-api.polymarket.com"
+  clob_url: "https://clob.polymarket.com"
+  ws_url: "wss://ws-subscriptions-clob.polymarket.com"
+
+execution:
+  balance_epsilon: 0.01
+  derive_clob_api_creds: true
+  builder_cred_rotation_seconds: 3600
+  builder_cred_rotation_stagger_markets: false
+  # Polygon RPC for on-chain CTF balanceOf (rem_YES/rem_NO after split). Override via POLYBOT5MBES_EXECUTION__RPC_URL.
+  rpc_url: "https://polygon-mainnet.g.alchemy.com/v2/XwoKGTuXJtL-R8bVNwO3N"
+  # pUSD (V2 collateral for split + redeem)
+  collateral_token: "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB"
+
+price_feed:
+  provider: chainlink
+  spot_provider: chainlink
+  chainlink_spot_poll_interval_s: 0.15
+  chainlink:
+    # Prefer POLYBOT5MBES_PRICE_FEED__CHAINLINK__STREAMS_USER_ID / __STREAMS_SECRET
+    streams_user_id: "bbc6411........"
+    streams_secret: "BV90940Ngste57OGCuqj3......."
+    feed_ids:
+     btc: "0x00039d9e45394f473......."
+     eth: "0x000362205e10b3a147d02......."
+
+#redeem settings------------------------------------------------------------------------------------------------------------
+liquidity_maker:
+  redeem_enabled: false
+  redeem_async_enabled: true
+  redeem_delay_seconds: 150
+  # btc at redeem_delay after epoch end; eth +gap (serial relayer queue).
+  redeem_per_symbol_gap_seconds: 10
+  redeem_retry_delay_seconds: 10
+  redeem_max_retries: 5
+  post_redeem_monitor_seconds: 0
+  trading_process_jsonl: "exports/trading_process.jsonl"
+  trading_process_log_mode: trades # trades | full
+  trading_process_log_interval_s: 0
+  trading_process_log_stdout: false
+  opposite_bid_history_enabled: true
+
+  # monitor settings------------------------------------------------------------------------------------------------------------
+  stagger_delay_seconds: 0
+  export_dir: "exports"
+  cycles: 0
+  # Monitor tick interval; each tick REST-polls YES/NO CLOB /book.
+  monitor_poll_interval_s: 0.15
+  monitor_rest_book_timeout_s: 3.0
+  monitor_balance_refresh_timeout_s: 3.0
+  monitor_balance_force_refresh_min_s: 1.0
+  monitor_wave_collect_timeout_s: 3.0
+  # CLOB user channel WS (orders/trades) per market — requires API_KEY/SECRET/PASSPHRASE.
+  monitor_user_ws_enabled: true
+  # YES/NO remaining shares: on-chain CTF via execution.rpc_url (0 = disable rem_YES/rem_NO).
+  # Avoid sub-second polling — CLOB balance-allowance/update is rate-limited by Cloudflare.
+  monitor_balance_poll_interval_s: 2.0
+  monitor_log_interval_s: 0.15
+  monitor_verbose_seconds_before_end: 165
+  log_strike_spot_interval_s: 0.15
+  # STRIKE_SPOT: difference_rate (off — not logged).
+  spot_minus_strike_difference_rate_lookback_s: 0
+
+  epoch: 5m
+  symbols: [btc, eth]
+
+# buy1: tight-spread high-ask BTC leg + strong ETH same-side bid + spot/strike gates → FAK BUY BTC.
+buy1:
+  enabled: true
+  trigger_time_start_sec: 60
+  trigger_time_end_sec: 3
+  max_spread: 0.1
+  min_best_ask: 0.90
+  spot_minus_strike_btc_abs_min: 40
+  averge_spot_minus_btc_abs_min: 18
+  spot_minus_strike_eth_abs_min: 1.0
+  other_symbol_min_best_bid: 0.90
+  monitoring_cycles: 2
+  shares: 5
+  buy_limit_price: 0.99
+  order_type: GTC
+
+# buy2: tight-spread high-ask ETH leg + strong BTC same-side bid + spot/strike gates → FAK BUY ETH.
+buy2:
+  enabled: true
+  trigger_time_start_sec: 60
+  trigger_time_end_sec: 3
+  max_spread: 0.1
+  min_best_ask: 0.90
+  spot_minus_strike_btc_abs_min: 55
+  averge_spot_minus_btc_abs_min: 18
+  spot_minus_strike_eth_abs_min: 1.5
+  other_symbol_min_best_bid: 0.90
+  monitoring_cycles: 2
+  shares: 5
+  buy_limit_price: 0.99
+  order_type: GTC
+
+# risk1..3 — protective exits after buy1/buy2 fill (priority: risk1 → risk2 → risk3).
+# risk1 — stop loss vs entry price
+risk1:
+  enabled: true
+  loss_offset: 0.20
+  monitoring_cycles: 3
+  sell_offset: 0.05
+  max_sell_attempts: 5
+
+# risk2 — time stop (from first confirmed fill)
+risk2:
+  enabled: false
+  hold_timeout_sec: 10
+  sell_offset: 0.10
+  max_sell_attempts: 5
+
+# risk3 — absolute low bid (token looks "dead")
+risk3:
+  enabled: false
+  bid_below: 0.2
+  monitoring_cycles: 3
+  sell_offset: 0.02
+  max_sell_attempts: 5
+
+# backtest settings------------------------------------------------------------------------------------------------------------
+
+backtest:
+  hedge_without_chain_compare: true
+  sell_without_strike_spot_margin: true
+  log_file: "logs/backtest/"
+  log_append: false
+  log_timestamp_name: true
+  simulation:
+    enabled: false
+    latency_ms_min: 50
+    latency_ms_max: 500
+    fee_bps: 0
+    limit_order_fill_probability: 0.92
+    market_style_sell: true
+    random_seed: 42
+    risk:
+      spread_widen_seconds_before_end: 30
+      spread_widen_depth_mult: 0.55
+      liquidity_eviction_probability: 0.05
+      eviction_size_fraction: 0.35
+      no_exit_liquidity_probability: 0.02

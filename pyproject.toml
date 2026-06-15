@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "polybot5m"
+version = "0.2.0"
+description = "Polymarket bot — split pUSD via V2 adapters, monitor, redeem"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.9",
+    "websockets>=12.0",
+    "pydantic>=2.6",
+    "pydantic-settings>=2.1",
+    "pyyaml>=6.0",
+    "structlog>=24.1",
+    "click>=8.1",
+    "rich>=13.7",
+    "py-clob-client-v2",
+    "python-dotenv>=1.0",
+    "web3>=6.0",
+    "eth-abi>=5.0",
+    "eth-utils>=4.0",
+    "py-builder-relayer-client @ git+https://github.com/polymarket/py-builder-relayer-client.git",
+    "py-builder-signing-sdk",
+]
+
+[project.optional-dependencies]
+relayer = []
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.2",
+]
+
+[project.scripts]
+polybot5m = "polybot5m.cli:cli"
+polybot5m-backtest = "polybot5m.backtest.cli:main"
+poly-btc-eth-bot = "polybot5m.windows_entry:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/polybot5m"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/polybot5m", "config"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
