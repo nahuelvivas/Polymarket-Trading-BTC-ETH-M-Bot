@@ -111,7 +111,7 @@ buy1:
   trigger_time_end_sec: 3
   max_spread: 0.1
   min_best_ask: 0.90
-  spot_minus_strike_btc_abs_min: 40
+  spot_minus_strike_btc_abs_min: 45
   averge_spot_minus_btc_abs_min: 18
   spot_minus_strike_eth_abs_min: 1.0
   other_symbol_min_best_bid: 0.90
@@ -127,9 +127,9 @@ buy2:
   trigger_time_end_sec: 3
   max_spread: 0.1
   min_best_ask: 0.90
-  spot_minus_strike_btc_abs_min: 55
+  spot_minus_strike_btc_abs_min: 60
   averge_spot_minus_btc_abs_min: 18
-  spot_minus_strike_eth_abs_min: 1.5
+  spot_minus_strike_eth_abs_min: 2.0
   other_symbol_min_best_bid: 0.90
   monitoring_cycles: 2
   shares: 5
@@ -140,7 +140,7 @@ buy2:
 # risk1 — stop loss vs entry price
 risk1:
   enabled: true
-  loss_offset: 0.20
+  loss_offset: 0.40
   monitoring_cycles: 3
   sell_offset: 0.05
   max_sell_attempts: 5
@@ -148,14 +148,14 @@ risk1:
 # risk2 — time stop (from first confirmed fill)
 risk2:
   enabled: false
-  hold_timeout_sec: 10
+  hold_timeout_sec: 20
   sell_offset: 0.10
-  max_sell_attempts: 5
+  max_sell_attempts: 54
 
 # risk3 — absolute low bid (token looks "dead")
 risk3:
-  enabled: false
-  bid_below: 0.2
+  enabled: true
+  bid_below: 0.42
   monitoring_cycles: 3
   sell_offset: 0.02
   max_sell_attempts: 5
