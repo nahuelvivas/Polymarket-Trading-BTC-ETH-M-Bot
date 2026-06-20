@@ -51,8 +51,8 @@ Schedule gates the **entire bot** (no monitor cycles while sleeping). It does no
 
 | Strategy | Symbol | Window (t_minus) | Action |
 |----------|--------|------------------|--------|
-| buy1 | btc | 60s → 3s | GTC BUY btc YES or NO |
-| buy2 | eth | 60s → 3s | GTC BUY eth YES or NO |
+| buy1 | btc | 60s → 8s | GTC BUY btc YES or NO |
+| buy2 | eth | 60s → 8s | GTC BUY eth YES or NO |
 | risk1 | btc or eth | after fill | GTC SELL (stop loss vs entry) |
 | risk2 | btc or eth | after fill | GTC SELL (time stop) |
 | risk3 | btc or eth | after fill | GTC SELL (low bid) |

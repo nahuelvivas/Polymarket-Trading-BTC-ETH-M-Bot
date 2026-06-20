@@ -24,7 +24,7 @@ bot:
 
 # UTC trading schedule (Mon–Sat by default; Sunday always sleeps when enabled).
 schedule:
-  enabled: false
+  enabled: true
   weekdays: [monday, tuesday, wednesday, thursday, friday, saturday]
   windows:
     - start_hour: 4
@@ -48,7 +48,7 @@ execution:
   builder_cred_rotation_seconds: 3600
   builder_cred_rotation_stagger_markets: false
   # Polygon RPC for on-chain CTF balanceOf (rem_YES/rem_NO after split). Override via POLYBOT5MBES_EXECUTION__RPC_URL.
-  rpc_url: "https://polygon-mainnet.g.alchemy.com/v2/XwoKGTuXJtL-R8bVNwO3N"
+  rpc_url: ""
   # pUSD (V2 collateral for split + redeem)
   collateral_token: "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB"
 
@@ -108,7 +108,7 @@ liquidity_maker:
 buy1:
   enabled: true
   trigger_time_start_sec: 60
-  trigger_time_end_sec: 3
+  trigger_time_end_sec: 8
   max_spread: 0.1
   min_best_ask: 0.90
   spot_minus_strike_btc_abs_min: 45
