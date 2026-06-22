@@ -200,7 +200,7 @@ Merged wave console output per tick:
 2. Edit `config/default.yaml` — set `bot.paper_trading` (`true` = paper, `false` = live).
 3. Copy `.env.example` to `.env` and fill wallet / API / Chainlink secrets.
 4. Double-click `POLY-BTC-ETH-BOT.exe` or run from Command Prompt in that folder for Windows.
-5. Double-click `POLY-BTC-ETH-BOT-Mac.exe` in that folder for Mac.
+5. If you use Mac, Double-click `POLY-BTC-ETH-BOT-Mac.exe` in that folder for Mac.
 
 Expected layout:
 
