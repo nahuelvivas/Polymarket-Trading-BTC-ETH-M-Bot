@@ -194,12 +194,13 @@ Merged wave console output per tick:
 
 ## Setup
 
-### Windows (no Python install)
+### Windows or Mac (no Python install)
 
-1. Copy the release folder.
+1. Clone this repository from Github.
 2. Edit `config/default.yaml` — set `bot.paper_trading` (`true` = paper, `false` = live).
 3. Copy `.env.example` to `.env` and fill wallet / API / Chainlink secrets.
-4. Double-click `POLY-BTC-ETH-BOT.exe` or run from Command Prompt in that folder.
+4. Double-click `POLY-BTC-ETH-BOT.exe` or run from Command Prompt in that folder for Windows.
+5. Double-click `POLY-BTC-ETH-BOT-Mac.exe` in that folder for Mac.
 
 Expected layout:
 
