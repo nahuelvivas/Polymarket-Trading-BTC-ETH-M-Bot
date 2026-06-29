@@ -15,12 +15,12 @@ price_feed:
     # POLYBOT5MBES_PRICE_FEED__CHAINLINK__STREAMS_USER_ID
     # POLYBOT5MBES_PRICE_FEED__CHAINLINK__STREAMS_SECRET
 
-    streams_user_id: "bbc6411........"
-    streams_secret: "BV90940Ngste57OGCuqj3......."
+    streams_user_id: "xxxxxxxxxxxxxxx"
+    streams_secret: "xxxxxxxxxxxxxxx"
 
     feed_ids:
-      btc: "0x00039d9e45394f473......."
-      eth: "0x000362205e10b3a147d02......."
+      btc: "xxxxxxxxxxxxxxxxxx"
+      eth: "xxxxxxxxxxxxxxxxxx"
 
 # ==============================================================================
 # Market Monitor
