@@ -356,4 +356,11 @@ polymarket arbitrage bot, polymarket trading bot, polymarket bot github, predict
 
 If you encounter any issues or are interested in other profitable Polymarket trading bots, feel free to reach out to me.
 
-- Telegram: [@nahuelvivas88 ](https://t.me/nahuelvivas88) 
+- Telegram: [@nahuelvivas88 ](https://t.me/nahuelvivas88)
+
+[![GitHub Stars](https://img.shields.io/github/stars/nahuelvivas/Polymarket-Arbitrage-Trading-Bot?style=for-the-badge)](https://github.com/nahuelvivas/Polymarket-Arbitrage-Trading-Bot/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/nahuelvivas/Polymarket-Arbitrage-Trading-Bot?style=for-the-badge)](https://github.com/nahuelvivas/Polymarket-Arbitrage-Trading-Bot/network/members)
+[![License](https://img.shields.io/github/license/nahuelvivas/Polymarket-Arbitrage-Trading-Bot?style=for-the-badge)](https://github.com/nahuelvivas/Polymarket-Arbitrage-Trading-Bot/blob/main/LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/nahuelvivas/Polymarket-Arbitrage-Trading-Bot?style=for-the-badge)](https://github.com/nahuelvivas/Polymarket-Arbitrage-Trading-Bot/commits/main)
+[![Issues](https://img.shields.io/github/issues/nahuelvivas/Polymarket-Arbitrage-Trading-Bot?style=for-the-badge)](https://github.com/nahuelvivas/Polymarket-Arbitrage-Trading-Bot/issues)
+
